@@ -10,6 +10,9 @@ from sklearn.metrics import accuracy_score
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from collections import Counter
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
 
 
 
