@@ -15,8 +15,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from collections import Counter
 import nltk
-# nltk.download('punkt')
-# nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('stopwords')
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 global check_url
@@ -74,29 +74,6 @@ def extract_text_without_urls(string):
     for i in range(0,len(url)):
         text_without_urls = re.sub(url[i], "", string)
     return text_without_urls.strip()
-
-# searches for keywords extracted from title1 in the url page content
-# def search_keywords(url, keywords):
-#     # Make a request to the URL
-#     response = requests.get(url)
-
-#     if response.status_code == 200:
-#         # Convert the response content to lowercase for case-insensitive matching
-#         page_content = response.text.lower()
-
-#         # Count the number of keywords present on the page
-#         num_keywords_present = 0
-
-#         # Search for each keyword in the page content
-#         for keyword in keywords:
-#             if keyword.lower() in page_content:
-#                 num_keywords_present += 1
-
-#         return num_keywords_present >= 2
-
-#     else:
-#         print("Failed to access the URL.")
-#         return False
 
 
 import requests
