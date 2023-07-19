@@ -21,6 +21,16 @@ from oauth2client.service_account import ServiceAccountCredentials
 global check_url
 
 
+
+# Function to check if a URL is valid
+def is_valid_url(url):
+    try:
+        response = requests.head(url)
+        return response.status_code == 200
+    except requests.exceptions.RequestException:
+        return False
+
+
 def is_mal(url):
     # Provide your VirusTotal API key
     api_key = '13b314d85cd7bf5122ccfd05637aedbf2d6513192161a1cb90fdee713f1e06c5'
@@ -320,6 +330,14 @@ if submit_button:
         txt2 =False
         global headline
         headline = get_first_headline_url(a)
+
+    elif check_url:
+        url = check_url[0]
+        is_url_valid = is_valid_url(url)
+        if is_url_valid:
+            st.write("URL is valid.")
+        else:
+            st.write("URL is invalid or not accessible.")
     elif check_url!=[]:
         txt2 =False #txt2 is used for extracting insta caption
         Title1 = extract_text_without_urls(Title)
