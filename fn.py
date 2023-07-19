@@ -9,7 +9,6 @@ from PIL import Image
 from bs4 import BeautifulSoup
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -153,14 +152,6 @@ def get_keywords(sentence):
 
 
 # Scrape the Instagram caption from the given post URL.
-
-# def scrape_instagram_caption(post_url: str) -> str:
-#     response = requests.get(post_url)
-#     soup = BeautifulSoup(response.text, 'html.parser')
-#     caption_element = soup.select_one('meta[property="og:description"]')
-#     caption = caption_element['content'] if caption_element else ''
-#     return caption
-
 def scrape_instagram_caption(post_url: str) -> str:
     try:
         response = requests.get(post_url)
@@ -292,39 +283,7 @@ def first(Title):
 
 
 
-#message or news
-def news_message(text):
-# Load the dataset
-    df = pd.read_csv('news_message.csv')
 
-    # Split the dataset into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(df['title'], df['category'], test_size=0.2, random_state=42)
-
-    # Convert the text data into numerical features using TF-IDF
-    vectorizer = TfidfVectorizer(stop_words='english')
-    X_train = vectorizer.fit_transform(X_train)
-    X_test = vectorizer.transform(X_test)
-
-    # Train a Naive Bayes classifier on the training set
-    classifier = MultinomialNB()
-    classifier.fit(X_train, y_train)
-
-    # Predict the labels for the testing set
-    y_pred = classifier.predict(X_test)
-
-    # Calculate the accuracy of the classifier on the testing set
-    accuracy = accuracy_score(y_test, y_pred)
-    print('Accuracy:', accuracy)
-
-    # Use the classifier to predict the label of a new text
-    X_new = vectorizer.transform([text])
-    prediction = classifier.predict(X_new)[0] 
-    if prediction == "news" :
-        search_csv()
-    else:
-        global result
-        # result = 'Irrelevant'
-        search_csv()
         
 
 
@@ -437,7 +396,7 @@ if submit_button:
         if mal_url == True:
             st.write("URL is not safe.")
         else:
-            st.write("URL is safe.") 
+            st.write("URL is valid and safe.") 
         write_to_csv([Title , url , result])
     elif result=='True' or result==True or result=='TRUE':
         st.write("Result: Real News")
@@ -446,7 +405,7 @@ if submit_button:
             if mal_url == True:
                 st.write("URL is not safe.")
             else:
-                st.write("URL is safe.") 
+                st.write("URL is valid and safe.") 
         write_to_csv([Title , url , result])
     else:
         st.write(' ')  
