@@ -7,7 +7,6 @@ import re
 import numpy as np
 from PIL import Image
 from bs4 import BeautifulSoup
-from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score
 from nltk.tokenize import word_tokenize
@@ -31,7 +30,7 @@ def is_valid_url(url):
         return False
 
 
-def is_mal(url):
+def malware(url):
     # Provide your VirusTotal API key
     api_key = '13b314d85cd7bf5122ccfd05637aedbf2d6513192161a1cb90fdee713f1e06c5'
 
@@ -349,14 +348,14 @@ if submit_button:
         page = search_keywords(url,key)
         if page == True:
             result = scraper(Title1)
-            mal_url=is_mal(check_url)
+            mal_url=malware(check_url)
             # if mal_url == True:
             #     st.write("URL is not safe.")
             # else:
             #     st.write("URL is safe.") 
         else:
             st.write("Content in url not matched")
-            mal_url=is_mal(check_url)
+            mal_url=malware(check_url)
             if mal_url == True:
                 st.write("URL is not safe.")
             else:
@@ -370,7 +369,7 @@ if submit_button:
         txt2 = check_match(Title,txt1)
         if(txt2 == True):
             result = search_csv(Title)
-            mal_url=is_mal(url)
+            mal_url=malware(url)
             if mal_url == True:
                 st.write("URL is not safe.")
             else:
@@ -378,7 +377,7 @@ if submit_button:
         else:
             result=' '
             st.write("Content in url not matched.")    
-            mal_url=is_mal(url)
+            mal_url=malware(url)
             if mal_url == True:
                 st.write("URL is not safe.")
             else:
@@ -401,7 +400,7 @@ if submit_button:
             url_append(url, first(Title))
                 # Convert the CSV string to bytes
             csv_bytes = csv_string.encode('utf-8')
-            mal_url=is_mal(url)
+            mal_url=malware(url)
             if mal_url == True:
                 st.write("URL is not safe.")
             else:
@@ -410,7 +409,7 @@ if submit_button:
     elif  result=='False' or result==False or result=='FALSE':
         st.write("Result: Fake News")
         st.write("Check here for real news: ", headline)
-        mal_url=is_mal(url)
+        mal_url=malware(url)
         if mal_url == True:
             st.write("URL is not safe.")
         else:
@@ -419,7 +418,7 @@ if submit_button:
     elif result=='True' or result==True or result=='TRUE':
         st.write("Result: Real News")
         if not url=='':
-            mal_url=is_mal(url)
+            mal_url=malware(url)
             if mal_url == True:
                 st.write("URL is not safe.")
             else:
